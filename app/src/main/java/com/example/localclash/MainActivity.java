@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MapView mapView;
 
-    // Coordenadas aproximadas de La Florida, Santiago, Chile
+
     private static final double LA_FLORIDA_LAT = -33.5227;
     private static final double LA_FLORIDA_LON = -70.5983;
     private static final double DEFAULT_ZOOM = 14.5;
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Configuración requerida por osmdroid para manejo de caché y User-Agent
+
         Configuration.getInstance().load(getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         Configuration.getInstance().setUserAgentValue(getPackageName());
@@ -42,12 +42,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Inicializar MapView
         mapView = findViewById(R.id.mapView);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
 
-        // Configurar vista inicial centrada en La Florida
+
         IMapController mapController = mapView.getController();
         mapController.setZoom(DEFAULT_ZOOM);
         GeoPoint laFloridaPoint = new GeoPoint(LA_FLORIDA_LAT, LA_FLORIDA_LON);
