@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
+import com.example.localclash.MainActivity;
 import com.example.localclash.R;
 import java.util.concurrent.Executor;
 

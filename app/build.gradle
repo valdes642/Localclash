@@ -37,9 +37,8 @@ dependencies {
     implementation libs.biometric
     implementation libs.constraintlayout
     implementation libs.material
+    implementation libs.osmdroid.android
     testImplementation libs.junit
     androidTestImplementation libs.espresso.core
     androidTestImplementation libs.ext.junit
-    implemetation(libs.biometric)
-    implemetation(libs.osmdroid.android)
 }
