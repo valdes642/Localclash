@@ -17,16 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LocalClash">
 
+        <!-- Actividad de Login con Biometría / PIN (Launcher) -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:name=".activities.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Actividad Principal (Mapa) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
