@@ -2,18 +2,20 @@
     <string name="app_name">LocalCash</string>
     <string name="login_title">LocalCash</string>
     <string name="login_subtitle">Finanzas Personales Locales &amp; Seguras</string>
-    <string name="pin_hint">PIN de Acceso (Ej. 1234)</string>
-    <string name="btn_login_pin">Ingresar con PIN</string>
+    <string name="username_hint">Usuario (Ej. victor)</string>
+    <string name="password_hint">Contraseña (Ej. 060402)</string>
+    <string name="btn_login">Ingresar</string>
     <string name="btn_login_biometric">Ingresar con Huella Dactilar</string>
-    <string name="status_default">Usa tu PIN o Huella dactilar para ingresar</string>
+    <string name="status_default">Ingresa con tu usuario y clave o huella dactilar</string>
     <string name="status_biometric_success">¡Autenticación biométrica exitosa!</string>
     <string name="status_biometric_error">Error biométrico: %1$s</string>
     <string name="status_biometric_failed">Huella no reconocida. Intenta de nuevo.</string>
-    <string name="status_biometric_unavailable">Biometría no disponible. Inicia sesión con PIN.</string>
+    <string name="status_biometric_unavailable">Biometría no disponible. Inicia sesión con usuario y clave.</string>
     <string name="prompt_title">Acceso LocalCash</string>
     <string name="prompt_subtitle">Escanea tu huella para acceder</string>
-    <string name="prompt_negative_button">Usar PIN</string>
-    <string name="error_empty_pin">Por favor ingresa tu PIN</string>
-    <string name="error_invalid_pin">PIN incorrecto (PIN por defecto: 1234)</string>
+    <string name="prompt_negative_button">Usar Clave</string>
+    <string name="error_empty_username">Por favor ingresa tu usuario</string>
+    <string name="error_empty_password">Por favor ingresa tu contraseña</string>
+    <string name="error_invalid_credentials">Usuario o contraseña incorrectos</string>
     <string name="welcome_message">¡Bienvenido a LocalCash!</string>
 </resources>

@@ -25,15 +25,17 @@ import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText etPin;
+    private EditText etUsername;
+    private EditText etPassword;
     private Button btnBiometricLogin;
     private TextView txtStatus;
 
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
 
-    // PIN predeterminado para demostración
-    private static final String DEFAULT_PIN = "1234";
+    // Credenciales de acceso requeridas
+    private static final String TARGET_USERNAME = "victor";
+    private static final String TARGET_PASSWORD = "060402";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +51,17 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Referencias a los componentes de la vista
-        etPin = findViewById(R.id.etPin);
-        Button btnLoginPin = findViewById(R.id.btnLoginPin);
+        etUsername = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.etPassword);
+        Button btnLogin = findViewById(R.id.btnLogin);
         btnBiometricLogin = findViewById(R.id.btnBiometricLogin);
         txtStatus = findViewById(R.id.txtStatus);
 
         // Configurar la autenticación por huella dactilar (Biometría)
         setupBiometricPrompt();
 
-        // Listener para inicio de sesión por PIN
-        btnLoginPin.setOnClickListener(v -> handlePinLogin());
+        // Listener para inicio de sesión por Usuario y Clave
+        btnLogin.setOnClickListener(v -> handleTraditionalLogin());
 
         // Listener para inicio de sesión por Huella
         btnBiometricLogin.setOnClickListener(v -> triggerBiometricAuth());
@@ -119,20 +122,29 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void handlePinLogin() {
-        String enteredPin = etPin.getText().toString().trim();
+    private void handleTraditionalLogin() {
+        String enteredUsername = etUsername.getText().toString().trim();
+        String enteredPassword = etPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(enteredPin)) {
-            etPin.setError(getString(R.string.error_empty_pin));
+        if (TextUtils.isEmpty(enteredUsername)) {
+            etUsername.setError(getString(R.string.error_empty_username));
+            etUsername.requestFocus();
             return;
         }
 
-        // Validación de PIN (Acepta '1234' o cualquier PIN de al menos 4 dígitos)
-        if (DEFAULT_PIN.equals(enteredPin) || enteredPin.length() >= 4) {
+        if (TextUtils.isEmpty(enteredPassword)) {
+            etPassword.setError(getString(R.string.error_empty_password));
+            etPassword.requestFocus();
+            return;
+        }
+
+        // Validación de credenciales para el usuario 'victor' y clave '060402'
+        if (TARGET_USERNAME.equalsIgnoreCase(enteredUsername) && TARGET_PASSWORD.equals(enteredPassword)) {
             Toast.makeText(this, getString(R.string.welcome_message), Toast.LENGTH_SHORT).show();
             navigateToMain();
         } else {
-            etPin.setError(getString(R.string.error_invalid_pin));
+            Toast.makeText(this, getString(R.string.error_invalid_credentials), Toast.LENGTH_LONG).show();
+            etPassword.setError(getString(R.string.error_invalid_credentials));
         }
     }
 

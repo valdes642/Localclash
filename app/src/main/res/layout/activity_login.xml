@@ -17,7 +17,7 @@
             android:id="@+id/imgLogo"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="32dp"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,35 +50,55 @@
             app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutPin"
+            android:id="@+id/inputLayoutUsername"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:hint="@string/pin_hint"
+            android:layout_marginTop="28dp"
+            android:hint="@string/username_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtSubtitle">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPin"
+                android:id="@+id/etUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
-                android:maxLength="6" />
+                android:inputType="textPersonName"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutPassword"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/password_hint"
+            app:passwordToggleEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputLayoutUsername">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLoginPin"
+            android:id="@+id/btnLogin"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/btn_login_pin"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_login"
             android:textSize="16sp"
             app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/inputLayoutPin" />
+            app:layout_constraintTop_toBottomOf="@id/inputLayoutPassword" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBiometricLogin"
@@ -91,7 +111,7 @@
             app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnLoginPin" />
+            app:layout_constraintTop_toBottomOf="@id/btnLogin" />
 
         <TextView
             android:id="@+id/txtStatus"
