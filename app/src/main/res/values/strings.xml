@@ -38,5 +38,6 @@
     <!-- Map & Geolocation Strings -->
     <string name="map_title_santiago">LocalCash - Gran Santiago</string>
     <string name="btn_my_location">Mi Ubicación</string>
+    <string name="btn_back_to_menu">Volver al Menú</string>
     <string name="location_permission_required">Se requiere permiso de ubicación para geolocalizar en el mapa.</string>
 </resources>

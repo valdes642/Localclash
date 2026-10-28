@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -48,14 +49,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final LatLng SUCURSAL_LA_FLORIDA = new LatLng(-33.5227, -70.5983);
     private static final LatLng SUCURSAL_PROVIDENCIA = new LatLng(-33.4255, -70.6148);
 
-    // URL de Estilo de MapLibre e Identificación por Correo
+    // URL de Estilo de MapLibre
     private static final String MAPLIBRE_STYLE_URL = "https://demotiles.maplibre.org/style.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inicializar MapLibre con soporte de correo vhvergarav@gmail.com
+        // Inicializar MapLibre
         MapLibre.getInstance(this);
 
         EdgeToEdge.enable(this);
@@ -69,9 +70,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mapView = findViewById(R.id.mapView);
         FloatingActionButton fabLocation = findViewById(R.id.fabLocation);
+        ImageButton btnBackToMenu = findViewById(R.id.btnBackToMenu);
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        // Botón para regresar al menú principal
+        btnBackToMenu.setOnClickListener(v -> finish());
 
         // Botón flotante para activar la geolocalización GPS
         fabLocation.setOnClickListener(v -> centerOnUserLocation());
@@ -89,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .zoom(DEFAULT_ZOOM)
                     .build());
 
-            // Agregar marcadores de Sucursales en Santiago (Centro, La Florida, Providencia)
+            // Agregar marcadores de Sucursales en Santiago
             addBranchMarkers(map);
 
             // Activar componente de localización del usuario
