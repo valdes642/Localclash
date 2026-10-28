@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">Local clash</string>
+    <string name="app_name">LocalCash</string>
+    <string name="login_title">LocalCash</string>
+    <string name="login_subtitle">Finanzas Personales Locales &amp; Seguras</string>
+    <string name="pin_hint">PIN de Acceso (Ej. 1234)</string>
+    <string name="btn_login_pin">Ingresar con PIN</string>
+    <string name="btn_login_biometric">Ingresar con Huella Dactilar</string>
+    <string name="status_default">Usa tu PIN o Huella dactilar para ingresar</string>
+    <string name="status_biometric_success">¡Autenticación biométrica exitosa!</string>
+    <string name="status_biometric_error">Error biométrico: %1$s</string>
+    <string name="status_biometric_failed">Huella no reconocida. Intenta de nuevo.</string>
+    <string name="status_biometric_unavailable">Biometría no disponible. Inicia sesión con PIN.</string>
+    <string name="prompt_title">Acceso LocalCash</string>
+    <string name="prompt_subtitle">Escanea tu huella para acceder</string>
+    <string name="prompt_negative_button">Usar PIN</string>
+    <string name="error_empty_pin">Por favor ingresa tu PIN</string>
+    <string name="error_invalid_pin">PIN incorrecto (PIN por defecto: 1234)</string>
+    <string name="welcome_message">¡Bienvenido a LocalCash!</string>
 </resources>

@@ -8,11 +8,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.localclash.MainActivity;
 import com.example.localclash.R;
@@ -22,7 +26,6 @@ import java.util.concurrent.Executor;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etPin;
-    private Button btnLoginPin;
     private Button btnBiometricLogin;
     private TextView txtStatus;
 
@@ -35,11 +38,19 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
+        // Soporte EdgeToEdge para paddings de barras del sistema
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login_scroll_view), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         // Referencias a los componentes de la vista
         etPin = findViewById(R.id.etPin);
-        btnLoginPin = findViewById(R.id.btnLoginPin);
+        Button btnLoginPin = findViewById(R.id.btnLoginPin);
         btnBiometricLogin = findViewById(R.id.btnBiometricLogin);
         txtStatus = findViewById(R.id.txtStatus);
 
@@ -50,11 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginPin.setOnClickListener(v -> handlePinLogin());
 
         // Listener para inicio de sesión por Huella
-        btnBiometricLogin.setOnClickListener(v -> {
-            if (biometricPrompt != null && promptInfo != null) {
-                biometricPrompt.authenticate(promptInfo);
-            }
-        });
+        btnBiometricLogin.setOnClickListener(v -> triggerBiometricAuth());
 
         // Verificar disponibilidad de hardware biométrico
         checkBiometricAvailability();
@@ -67,27 +74,27 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                Toast.makeText(LoginActivity.this, "¡Autenticación biométrica exitosa!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.status_biometric_success), Toast.LENGTH_SHORT).show();
                 navigateToMain();
             }
 
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                txtStatus.setText("Error biométrico: " + errString);
+                txtStatus.setText(getString(R.string.status_biometric_error, errString));
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(LoginActivity.this, "Huella no reconocida. Intenta de nuevo.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.status_biometric_failed), Toast.LENGTH_SHORT).show();
             }
         });
 
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Acceso LocalCash")
-                .setSubtitle("Escanea tu huella para acceder")
-                .setNegativeButtonText("Usar PIN")
+                .setTitle(getString(R.string.prompt_title))
+                .setSubtitle(getString(R.string.prompt_subtitle))
+                .setNegativeButtonText(getString(R.string.prompt_negative_button))
                 .build();
     }
 
@@ -97,12 +104,18 @@ public class LoginActivity extends AppCompatActivity {
                 BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.BIOMETRIC_WEAK);
 
         if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
-            txtStatus.setText("Ingresa tu PIN o usa tu huella dactilar");
-            // Mostrar diálogo biométrico automáticamente al iniciar la pantalla
-            biometricPrompt.authenticate(promptInfo);
+            txtStatus.setText(R.string.status_default);
+            // Solicitar biometría automáticamente cuando la ventana tenga foco
+            getWindow().getDecorView().post(this::triggerBiometricAuth);
         } else {
             btnBiometricLogin.setEnabled(false);
-            txtStatus.setText("Biometría no disponible. Inicia sesión con PIN.");
+            txtStatus.setText(R.string.status_biometric_unavailable);
+        }
+    }
+
+    private void triggerBiometricAuth() {
+        if (biometricPrompt != null && promptInfo != null && !isFinishing()) {
+            biometricPrompt.authenticate(promptInfo);
         }
     }
 
@@ -110,16 +123,16 @@ public class LoginActivity extends AppCompatActivity {
         String enteredPin = etPin.getText().toString().trim();
 
         if (TextUtils.isEmpty(enteredPin)) {
-            etPin.setError("Por favor ingresa tu PIN");
+            etPin.setError(getString(R.string.error_empty_pin));
             return;
         }
 
-        // Validación simple de PIN (Acepta '1234' o cualquier PIN de al menos 4 dígitos)
+        // Validación de PIN (Acepta '1234' o cualquier PIN de al menos 4 dígitos)
         if (DEFAULT_PIN.equals(enteredPin) || enteredPin.length() >= 4) {
-            Toast.makeText(this, "¡Bienvenido a LocalCash!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.welcome_message), Toast.LENGTH_SHORT).show();
             navigateToMain();
         } else {
-            etPin.setError("PIN incorrecto (PIN por defecto: 1234)");
+            etPin.setError(getString(R.string.error_invalid_pin));
         }
     }
 

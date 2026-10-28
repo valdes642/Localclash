@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="?attr/colorSurface">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="24dp">
@@ -21,14 +22,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="Logo LocalCash" />
+            android:contentDescription="@string/app_name" />
 
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="LocalCash"
+            android:text="@string/login_title"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="?attr/colorPrimary"
@@ -41,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Finanzas Personales Locales &amp; Seguras"
+            android:text="@string/login_subtitle"
             android:textSize="14sp"
             android:textColor="?attr/colorOnSurfaceVariant"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:hint="PIN de Acceso (Ej. 1234)"
+            android:hint="@string/pin_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtSubtitle">
@@ -72,7 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="16dp"
-            android:text="Ingresar con PIN"
+            android:text="@string/btn_login_pin"
             android:textSize="16sp"
             app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +86,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="12dp"
-            android:text="Ingresar con Huella Dactilar"
+            android:text="@string/btn_login_biometric"
             android:textSize="16sp"
             app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Usa tu PIN o Huella dactilar para ingresar"
+            android:text="@string/status_default"
             android:textSize="13sp"
             android:textColor="?attr/colorOnSurfaceVariant"
             app:layout_constraintEnd_toEndOf="parent"
