@@ -31,7 +31,12 @@
     <string name="menu_deudas">Deudas</string>
     <string name="menu_deudas_sub">Gastos grupales y reembolsos</string>
     <string name="menu_mapas">Mapas de Sucursales</string>
-    <string name="menu_mapas_sub">Ver sucursales en La Florida</string>
+    <string name="menu_mapas_sub">Ver sucursales en Gran Santiago</string>
     <string name="btn_logout">Cerrar Sesión</string>
     <string name="toast_module_selected">Módulo %1$s seleccionado</string>
+
+    <!-- Map & Geolocation Strings -->
+    <string name="map_title_santiago">LocalCash - Gran Santiago</string>
+    <string name="btn_my_location">Mi Ubicación</string>
+    <string name="location_permission_required">Se requiere permiso de ubicación para geolocalizar en el mapa.</string>
 </resources>

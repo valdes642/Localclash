@@ -1,17 +1,31 @@
 package com.example.localclash;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.maplibre.android.MapLibre;
+import org.maplibre.android.annotations.MarkerOptions;
 import org.maplibre.android.camera.CameraPosition;
+import org.maplibre.android.camera.CameraUpdateFactory;
 import org.maplibre.android.geometry.LatLng;
+import org.maplibre.android.location.LocationComponent;
+import org.maplibre.android.location.LocationComponentActivationOptions;
+import org.maplibre.android.location.modes.CameraMode;
+import org.maplibre.android.location.modes.RenderMode;
 import org.maplibre.android.maps.MapView;
 import org.maplibre.android.maps.MapLibreMap;
 import org.maplibre.android.maps.OnMapReadyCallback;
@@ -20,20 +34,28 @@ import org.maplibre.android.maps.Style;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mapView;
+    private MapLibreMap mapLibreMap;
 
-    // Coordenadas aproximadas de La Florida, Santiago, Chile
-    private static final double LA_FLORIDA_LAT = -33.5227;
-    private static final double LA_FLORIDA_LON = -70.5983;
-    private static final double DEFAULT_ZOOM = 14.0;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
 
-    // Estilo predeterminado de mapa vectorial de MapLibre
+    // Coordenadas del centro de Gran Santiago, Chile
+    private static final double SANTIAGO_LAT = -33.4489;
+    private static final double SANTIAGO_LON = -70.6693;
+    private static final double DEFAULT_ZOOM = 11.5;
+
+    // Coordenadas de Sucursales de LocalCash en Santiago
+    private static final LatLng SUCURSAL_CENTRO = new LatLng(-33.4429, -70.6539);
+    private static final LatLng SUCURSAL_LA_FLORIDA = new LatLng(-33.5227, -70.5983);
+    private static final LatLng SUCURSAL_PROVIDENCIA = new LatLng(-33.4255, -70.6148);
+
+    // URL de Estilo de MapLibre e Identificación por Correo
     private static final String MAPLIBRE_STYLE_URL = "https://demotiles.maplibre.org/style.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inicializar MapLibre SDK antes de inflar el layout
+        // Inicializar MapLibre con soporte de correo vhvergarav@gmail.com
         MapLibre.getInstance(this);
 
         EdgeToEdge.enable(this);
@@ -46,78 +68,148 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         mapView = findViewById(R.id.mapView);
+        FloatingActionButton fabLocation = findViewById(R.id.fabLocation);
+
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        // Botón flotante para activar la geolocalización GPS
+        fabLocation.setOnClickListener(v -> centerOnUserLocation());
     }
 
     @Override
-    public void onMapReady(@NonNull MapLibreMap mapLibreMap) {
-        mapLibreMap.setStyle(MAPLIBRE_STYLE_URL, new Style.OnStyleLoaded() {
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-                // Centrar la cámara en La Florida, Santiago, Chile
-                LatLng laFlorida = new LatLng(LA_FLORIDA_LAT, LA_FLORIDA_LON);
-                mapLibreMap.setCameraPosition(new CameraPosition.Builder()
-                        .target(laFlorida)
-                        .zoom(DEFAULT_ZOOM)
-                        .build());
-            }
+    public void onMapReady(@NonNull MapLibreMap map) {
+        this.mapLibreMap = map;
+
+        map.setStyle(MAPLIBRE_STYLE_URL, style -> {
+            // Posicionar la cámara inicialmente abarcando el Gran Santiago
+            LatLng santiago = new LatLng(SANTIAGO_LAT, SANTIAGO_LON);
+            map.setCameraPosition(new CameraPosition.Builder()
+                    .target(santiago)
+                    .zoom(DEFAULT_ZOOM)
+                    .build());
+
+            // Agregar marcadores de Sucursales en Santiago (Centro, La Florida, Providencia)
+            addBranchMarkers(map);
+
+            // Activar componente de localización del usuario
+            enableLocationComponent(style);
         });
+    }
+
+    @SuppressWarnings("deprecation")
+    private void addBranchMarkers(MapLibreMap map) {
+        map.addMarker(new MarkerOptions()
+                .position(SUCURSAL_CENTRO)
+                .title("Sucursal Santiago Centro")
+                .snippet("Casa Matriz LocalCash"));
+
+        map.addMarker(new MarkerOptions()
+                .position(SUCURSAL_LA_FLORIDA)
+                .title("Sucursal La Florida")
+                .snippet("Sucursal Comuna La Florida"));
+
+        map.addMarker(new MarkerOptions()
+                .position(SUCURSAL_PROVIDENCIA)
+                .title("Sucursal Providencia")
+                .snippet("Sucursal Providencia"));
+    }
+
+    private void enableLocationComponent(@NonNull Style style) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            LocationComponent locationComponent = mapLibreMap.getLocationComponent();
+            locationComponent.activateLocationComponent(
+                    LocationComponentActivationOptions.builder(this, style).build());
+            locationComponent.setLocationComponentEnabled(true);
+            locationComponent.setCameraMode(CameraMode.TRACKING);
+            locationComponent.setRenderMode(RenderMode.COMPASS);
+
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private void centerOnUserLocation() {
+        if (mapLibreMap == null) return;
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            LocationComponent locationComponent = mapLibreMap.getLocationComponent();
+            if (locationComponent.isLocationComponentActivated() && locationComponent.getLastKnownLocation() != null) {
+                Location lastLocation = locationComponent.getLastKnownLocation();
+                LatLng userLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+
+                mapLibreMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15.0));
+                Toast.makeText(this, "Centrado en tu ubicación actual", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Obteniendo posición GPS...", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, R.string.location_permission_required, Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (mapLibreMap != null && mapLibreMap.getStyle() != null) {
+                    enableLocationComponent(mapLibreMap.getStyle());
+                }
+            } else {
+                Toast.makeText(this, R.string.location_permission_required, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mapView != null) {
-            mapView.onStart();
-        }
+        if (mapView != null) mapView.onStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mapView != null) {
-            mapView.onResume();
-        }
+        if (mapView != null) mapView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mapView != null) {
-            mapView.onPause();
-        }
+        if (mapView != null) mapView.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mapView != null) {
-            mapView.onStop();
-        }
+        if (mapView != null) mapView.onStop();
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mapView != null) {
-            mapView.onSaveInstanceState(outState);
-        }
+        if (mapView != null) mapView.onSaveInstanceState(outState);
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        if (mapView != null) {
-            mapView.onLowMemory();
-        }
+        if (mapView != null) mapView.onLowMemory();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mapView != null) {
-            mapView.onDestroy();
-        }
+        if (mapView != null) mapView.onDestroy();
     }
 }
