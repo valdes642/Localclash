@@ -18,7 +18,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.localclash.MainActivity;
 import com.example.localclash.R;
 
 import java.util.concurrent.Executor;
@@ -78,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(LoginActivity.this, getString(R.string.status_biometric_success), Toast.LENGTH_SHORT).show();
-                navigateToMain();
+                navigateToHome();
             }
 
             @Override
@@ -141,15 +140,15 @@ public class LoginActivity extends AppCompatActivity {
         // Validación de credenciales para el usuario 'victor' y clave '060402'
         if (TARGET_USERNAME.equalsIgnoreCase(enteredUsername) && TARGET_PASSWORD.equals(enteredPassword)) {
             Toast.makeText(this, getString(R.string.welcome_message), Toast.LENGTH_SHORT).show();
-            navigateToMain();
+            navigateToHome();
         } else {
             Toast.makeText(this, getString(R.string.error_invalid_credentials), Toast.LENGTH_LONG).show();
             etPassword.setError(getString(R.string.error_invalid_credentials));
         }
     }
 
-    private void navigateToMain() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+    private void navigateToHome() {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(intent);
         finish(); // Cierra LoginActivity para no volver atrás con botón back
     }

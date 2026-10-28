@@ -17,5 +17,21 @@
     <string name="error_empty_username">Por favor ingresa tu usuario</string>
     <string name="error_empty_password">Por favor ingresa tu contraseña</string>
     <string name="error_invalid_credentials">Usuario o contraseña incorrectos</string>
-    <string name="welcome_message">¡Bienvenido a LocalCash!</string>
+    <string name="welcome_message">¡Bienvenido a LocalCash, Victor!</string>
+
+    <!-- Home Dashboard Strings -->
+    <string name="welcome_title">¡Bienvenido a LocalCash!</string>
+    <string name="welcome_subtitle">Hola Victor, selecciona un módulo para comenzar</string>
+    <string name="menu_cuentas">Cuentas</string>
+    <string name="menu_cuentas_sub">Efectivo, tarjetas y ahorros</string>
+    <string name="menu_transacciones">Transacciones</string>
+    <string name="menu_transacciones_sub">Registro de ingresos y egresos</string>
+    <string name="menu_contactos">Contactos</string>
+    <string name="menu_contactos_sub">Directorio local de usuarios</string>
+    <string name="menu_deudas">Deudas</string>
+    <string name="menu_deudas_sub">Gastos grupales y reembolsos</string>
+    <string name="menu_mapas">Mapas de Sucursales</string>
+    <string name="menu_mapas_sub">Ver sucursales en La Florida</string>
+    <string name="btn_logout">Cerrar Sesión</string>
+    <string name="toast_module_selected">Módulo %1$s seleccionado</string>
 </resources>
