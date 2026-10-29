@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="300"
+    android:viewportHeight="300">
+
+  <!-- Background Dark Canvas -->
+  <path
+      android:fillColor="#0D1519"
+      android:pathData="M0,0h300v300h-300z"/>
+
+  <!-- WALLET OUTLINE (White #FFFFFF) -->
+  <path
+      android:strokeColor="#FFFFFF"
+      android:strokeWidth="7"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:fillColor="#00000000"
+      android:pathData="M 80,135 C 80,126 86,122 95,122 L 205,122 C 214,122 220,126 220,135 L 220,178 C 220,187 214,190 205,190 L 95,190 C 86,190 80,187 80,178 Z"/>
+
+  <path
+      android:strokeColor="#FFFFFF"
+      android:strokeWidth="5"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M 80,158 L 198,158 C 208,158 212,162 212,167 L 212,172 C 212,177 208,180 198,180 L 80,180"/>
+
+  <!-- Wallet Clasp Button (Green Dot) -->
+  <path
+      android:strokeColor="#FFFFFF"
+      android:strokeWidth="4"
+      android:fillColor="#00000000"
+      android:pathData="M 180,146 L 215,146 C 220,146 222,148 222,153 L 222,161 C 222,166 220,168 215,168 L 180,168 C 176,168 174,166 174,161 L 174,153 C 174,148 176,146 180,146 Z"/>
+
+  <path
+      android:fillColor="#00E676"
+      android:pathData="M 198,157 a 3.5,3.5 0 1,1 0,0.1 z"/>
+
+  <!-- NEON GREEN LOCATION PIN (#00E676) -->
+  <path
+      android:strokeColor="#00E676"
+      android:strokeWidth="8"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:fillColor="#00000000"
+      android:pathData="M 150,185 L 105,115 C 88,90 95,58 122,46 C 150,34 180,48 188,72 C 195,94 180,115 150,185 Z"/>
+
+  <!-- FINGERPRINT RIDGE ARCS INSIDE PIN (#00E676) -->
+  <path
+      android:strokeColor="#00E676"
+      android:strokeWidth="5.5"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M 126,70 A 24,24 0 0,1 174,70"/>
+
+  <path
+      android:strokeColor="#00E676"
+      android:strokeWidth="5.5"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M 118,80 A 32,32 0 0,1 182,80"/>
+
+  <path
+      android:strokeColor="#00E676"
+      android:strokeWidth="5.5"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M 134,90 A 16,16 0 0,1 166,90"/>
+
+  <path
+      android:strokeColor="#00E676"
+      android:strokeWidth="5.5"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M 140,100 A 10,10 0 0,1 160,100"/>
+
+  <path
+      android:strokeColor="#00E676"
+      android:strokeWidth="5.5"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"
+      android:pathData="M 145,110 A 5,5 0 0,1 155,110"/>
+
+</vector>

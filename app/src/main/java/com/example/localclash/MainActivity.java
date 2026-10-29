@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -44,13 +46,35 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
 
-
+    // Coordenadas de Santiago de Chile (Gran Santiago)
     private static final double SANTIAGO_LAT = -33.4489;
     private static final double SANTIAGO_LON = -70.6693;
-    private static final double DEFAULT_ZOOM = 11.5;
+    private static final double DEFAULT_ZOOM = 12.0;
 
-
-    private static final String MAPLIBRE_STYLE_URL = "https://demotiles.maplibre.org/style.json";
+    // Estilo OpenStreetMap (OSM) mediante mosaicos raster en MapLibre
+    private static final String OSM_STYLE_JSON = "{\n" +
+            "  \"version\": 8,\n" +
+            "  \"name\": \"OpenStreetMap\",\n" +
+            "  \"sources\": {\n" +
+            "    \"osm-tiles\": {\n" +
+            "      \"type\": \"raster\",\n" +
+            "      \"tiles\": [\n" +
+            "        \"https://tile.openstreetmap.org/{z}/{x}/{y}.png\"\n" +
+            "      ],\n" +
+            "      \"tileSize\": 256,\n" +
+            "      \"attribution\": \"© OpenStreetMap contributors\"\n" +
+            "    }\n" +
+            "  },\n" +
+            "  \"layers\": [\n" +
+            "    {\n" +
+            "      \"id\": \"osm-tiles-layer\",\n" +
+            "      \"type\": \"raster\",\n" +
+            "      \"source\": \"osm-tiles\",\n" +
+            "      \"minzoom\": 0,\n" +
+            "      \"maxzoom\": 19\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,31 +95,57 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapView = findViewById(R.id.mapView);
         FloatingActionButton fabLocation = findViewById(R.id.fabLocation);
         ImageButton btnBackToMenu = findViewById(R.id.btnBackToMenu);
+        Button btnToggleMap = findViewById(R.id.btnToggleMap);
 
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
+        // Configuración basada en el patrón mapa3:
+        mapView.setVisibility(View.VISIBLE);
+
+        if (btnToggleMap != null) {
+            btnToggleMap.setText(R.string.btn_map_toggle_osm);
+            btnToggleMap.setOnClickListener(v -> centerOnSantiago());
+        }
+
+        if (fabLocation != null) {
+            fabLocation.setVisibility(View.VISIBLE);
+            fabLocation.setOnClickListener(v -> centerOnUserLocation());
+        }
 
         btnBackToMenu.setOnClickListener(v -> finish());
 
-        fabLocation.setOnClickListener(v -> centerOnUserLocation());
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(@NonNull MapLibreMap map) {
         this.mapLibreMap = map;
 
-        map.setStyle(MAPLIBRE_STYLE_URL, style -> {
+        // Cargar el estilo de OpenStreetMap (OSM)
+        map.setStyle(new Style.Builder().fromJson(OSM_STYLE_JSON), style -> {
 
+            // Centrar cámara en Santiago de Chile
             LatLng santiago = new LatLng(SANTIAGO_LAT, SANTIAGO_LON);
             map.setCameraPosition(new CameraPosition.Builder()
                     .target(santiago)
                     .zoom(DEFAULT_ZOOM)
                     .build());
 
+            // Cargar marcadores de las sucursales de Santiago desde la BD
             loadBranchMarkersFromDatabase(map);
 
+            // Activar componente de ubicación GPS del usuario
             enableLocationComponent(style);
+
+            // Mostrar Toast informativo como en el código de mapa3
+            Toast.makeText(MainActivity.this, R.string.toast_maplibre_osm, Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void centerOnSantiago() {
+        if (mapLibreMap == null) return;
+        LatLng santiago = new LatLng(SANTIAGO_LAT, SANTIAGO_LON);
+        mapLibreMap.animateCamera(CameraUpdateFactory.newLatLngZoom(santiago, DEFAULT_ZOOM));
+        Toast.makeText(this, R.string.toast_centered_santiago, Toast.LENGTH_SHORT).show();
     }
 
     @SuppressWarnings("deprecation")
@@ -140,9 +190,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 LatLng userLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
 
                 mapLibreMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15.0));
-                Toast.makeText(this, "Centrado en tu ubicación actual", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_centered_user, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Obteniendo posición GPS...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_getting_gps, Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, R.string.location_permission_required, Toast.LENGTH_SHORT).show();

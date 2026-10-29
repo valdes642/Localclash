@@ -99,8 +99,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_TRANSACCIONES + " (cuenta_id, tipo, monto, descripcion, fecha, latitud, longitud) VALUES (2, 'Egreso', 12500.0, 'Supermercado Lider La Florida', '2026-03-24', -33.5227, -70.5983)");
 
 
-        db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('Juan Pérez', '+56912345678', 'juan@gmail.com')");
-        db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('María López', '+56987654321', 'maria@gmail.com')");
+        db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('Victor Vergara', '+56912345678', 'vhvergarav@gmail.com')");
+        db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('Juan Pérez', '+56987654321', 'juan@gmail.com')");
+        db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('María López', '+56911223344', 'maria@gmail.com')");
 
 
         db.execSQL("INSERT INTO " + TABLE_DEUDAS + " (contacto_id, monto, descripcion, estado, fecha) VALUES (1, 15000.0, 'Almuerzo compartido', 'Pendiente', '2026-03-25')");

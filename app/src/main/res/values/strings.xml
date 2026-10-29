@@ -37,6 +37,12 @@
 
     <!-- Map & Geolocation Strings -->
     <string name="map_title_santiago">LocalCash - Gran Santiago</string>
+    <string name="map_subtitle_osm">Santiago, Chile (OpenStreetMap)</string>
+    <string name="btn_map_toggle_osm">Mapa: MapLibre (OSM)</string>
+    <string name="toast_maplibre_osm">Estás viendo: MapLibre (OpenStreetMap)</string>
+    <string name="toast_centered_santiago">Centrado en Santiago de Chile</string>
+    <string name="toast_centered_user">Centrado en tu ubicación actual</string>
+    <string name="toast_getting_gps">Obteniendo posición GPS…</string>
     <string name="btn_my_location">Mi Ubicación</string>
     <string name="btn_back_to_menu">Volver al Menú</string>
     <string name="location_permission_required">Se requiere permiso de ubicación para geolocalizar en el mapa.</string>
