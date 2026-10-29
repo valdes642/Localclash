@@ -18,7 +18,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "LocalCashDB.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Nombre de Tablas
     public static final String TABLE_CUENTAS = "Cuentas";
@@ -111,6 +111,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Santiago Centro', 'Av. Libertador Bernardo O''Higgins 1111', -33.4429, -70.6539)");
         db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal La Florida', 'Av. Vicuña Mackenna 7110', -33.5227, -70.5983)");
         db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Providencia', 'Av. Providencia 1950', -33.4255, -70.6148)");
+        db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Las Condes', 'Av. Apoquindo 4500', -33.4168, -70.5815)");
+        db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Ñuñoa', 'Av. Irarrázaval 3400', -33.4569, -70.6031)");
+        db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Maipú', 'Av. Pajaritos 1900', -33.5100, -70.7572)");
+        db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Puente Alto', 'Av. Concha y Toro 350', -33.6067, -70.5781)");
+        db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Vitacura', 'Av. Vitacura 6900', -33.3986, -70.5723)");
+        db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Estación Central', 'Av. Libertador Bernardo O''Higgins 3850', -33.4556, -70.6908)");
     }
 
 

@@ -2,6 +2,9 @@ package com.example.localclash;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +26,8 @@ import com.example.localclash.models.Sucursal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.maplibre.android.MapLibre;
+import org.maplibre.android.annotations.Icon;
+import org.maplibre.android.annotations.IconFactory;
 import org.maplibre.android.annotations.MarkerOptions;
 import org.maplibre.android.camera.CameraPosition;
 import org.maplibre.android.camera.CameraUpdateFactory;
@@ -51,30 +56,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final double SANTIAGO_LON = -70.6693;
     private static final double DEFAULT_ZOOM = 12.0;
 
-    // Estilo OpenStreetMap (OSM) mediante mosaicos raster en MapLibre
-    private static final String OSM_STYLE_JSON = "{\n" +
-            "  \"version\": 8,\n" +
-            "  \"name\": \"OpenStreetMap\",\n" +
-            "  \"sources\": {\n" +
-            "    \"osm-tiles\": {\n" +
-            "      \"type\": \"raster\",\n" +
-            "      \"tiles\": [\n" +
-            "        \"https://tile.openstreetmap.org/{z}/{x}/{y}.png\"\n" +
-            "      ],\n" +
-            "      \"tileSize\": 256,\n" +
-            "      \"attribution\": \"© OpenStreetMap contributors\"\n" +
-            "    }\n" +
-            "  },\n" +
-            "  \"layers\": [\n" +
-            "    {\n" +
-            "      \"id\": \"osm-tiles-layer\",\n" +
-            "      \"type\": \"raster\",\n" +
-            "      \"source\": \"osm-tiles\",\n" +
-            "      \"minzoom\": 0,\n" +
-            "      \"maxzoom\": 19\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+    // Estilo OpenStreetMap (OpenFreeMap Liberty vector tiles, sin API Key requerida)
+    private static final String OPENFREEMAP_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(@NonNull MapLibreMap map) {
         this.mapLibreMap = map;
 
-        // Cargar el estilo de OpenStreetMap (OSM)
-        map.setStyle(new Style.Builder().fromJson(OSM_STYLE_JSON), style -> {
+        // Cargar el estilo OpenStreetMap (OpenFreeMap Liberty) sin requerir API Key
+        map.setStyle(OPENFREEMAP_STYLE_URL, style -> {
 
             // Centrar cámara en Santiago de Chile
             LatLng santiago = new LatLng(SANTIAGO_LAT, SANTIAGO_LON);
@@ -151,12 +134,32 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @SuppressWarnings("deprecation")
     private void loadBranchMarkersFromDatabase(MapLibreMap map) {
         List<Sucursal> sucursales = dbHelper.getAllSucursales();
+        Icon greenBillIcon = null;
+        try {
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_green_bill);
+            if (drawable != null) {
+                int width = drawable.getIntrinsicWidth() > 0 ? drawable.getIntrinsicWidth() : 96;
+                int height = drawable.getIntrinsicHeight() > 0 ? drawable.getIntrinsicHeight() : 96;
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                drawable.draw(canvas);
+                greenBillIcon = IconFactory.getInstance(this).fromBitmap(bitmap);
+            }
+        } catch (Exception e) {
+            android.util.Log.e("MainActivity", "Error converting icon", e);
+        }
+
         for (Sucursal s : sucursales) {
             LatLng pos = new LatLng(s.getLatitud(), s.getLongitud());
-            map.addMarker(new MarkerOptions()
+            MarkerOptions markerOptions = new MarkerOptions()
                     .position(pos)
                     .title(s.getNombre())
-                    .snippet(s.getDireccion()));
+                    .snippet(s.getDireccion());
+            if (greenBillIcon != null) {
+                markerOptions.icon(greenBillIcon);
+            }
+            map.addMarker(markerOptions);
         }
     }
 
