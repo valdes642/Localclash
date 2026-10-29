@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="ifruit_green">#00C853</color>
+    <color name="ifruit_green_bright">#00E676</color>
+    <color name="ifruit_dark_bg">#0F1115</color>
+    <color name="ifruit_card_bg">#1E222A</color>
 </resources>
