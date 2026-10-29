@@ -16,6 +16,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.localclash.database.DatabaseHelper;
+import com.example.localclash.models.Sucursal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.maplibre.android.MapLibre;
@@ -32,10 +34,13 @@ import org.maplibre.android.maps.MapLibreMap;
 import org.maplibre.android.maps.OnMapReadyCallback;
 import org.maplibre.android.maps.Style;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mapView;
     private MapLibreMap mapLibreMap;
+    private DatabaseHelper dbHelper;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
 
@@ -44,11 +49,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final double SANTIAGO_LON = -70.6693;
     private static final double DEFAULT_ZOOM = 11.5;
 
-    // Coordenadas de Sucursales de LocalCash en Santiago
-    private static final LatLng SUCURSAL_CENTRO = new LatLng(-33.4429, -70.6539);
-    private static final LatLng SUCURSAL_LA_FLORIDA = new LatLng(-33.5227, -70.5983);
-    private static final LatLng SUCURSAL_PROVIDENCIA = new LatLng(-33.4255, -70.6148);
-
     // URL de Estilo de MapLibre
     private static final String MAPLIBRE_STYLE_URL = "https://demotiles.maplibre.org/style.json";
 
@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inicializar MapLibre
+        // Inicializar MapLibre y Helper de Base de Datos
         MapLibre.getInstance(this);
+        dbHelper = new DatabaseHelper(this);
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -94,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .zoom(DEFAULT_ZOOM)
                     .build());
 
-            // Agregar marcadores de Sucursales en Santiago
-            addBranchMarkers(map);
+            // Cargar marcadores de Sucursales desde la Base de Datos SQLite
+            loadBranchMarkersFromDatabase(map);
 
             // Activar componente de localización del usuario
             enableLocationComponent(style);
@@ -103,21 +104,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @SuppressWarnings("deprecation")
-    private void addBranchMarkers(MapLibreMap map) {
-        map.addMarker(new MarkerOptions()
-                .position(SUCURSAL_CENTRO)
-                .title("Sucursal Santiago Centro")
-                .snippet("Casa Matriz LocalCash"));
-
-        map.addMarker(new MarkerOptions()
-                .position(SUCURSAL_LA_FLORIDA)
-                .title("Sucursal La Florida")
-                .snippet("Sucursal Comuna La Florida"));
-
-        map.addMarker(new MarkerOptions()
-                .position(SUCURSAL_PROVIDENCIA)
-                .title("Sucursal Providencia")
-                .snippet("Sucursal Providencia"));
+    private void loadBranchMarkersFromDatabase(MapLibreMap map) {
+        List<Sucursal> sucursales = dbHelper.getAllSucursales();
+        for (Sucursal s : sucursales) {
+            LatLng pos = new LatLng(s.getLatitud(), s.getLongitud());
+            map.addMarker(new MarkerOptions()
+                    .position(pos)
+                    .title(s.getNombre())
+                    .snippet(s.getDireccion()));
+        }
     }
 
     private void enableLocationComponent(@NonNull Style style) {
