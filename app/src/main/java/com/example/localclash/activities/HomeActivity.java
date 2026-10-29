@@ -38,13 +38,17 @@ public class HomeActivity extends AppCompatActivity {
         CardView cardMapas = findViewById(R.id.cardMapas);
         Button btnLogout = findViewById(R.id.btnLogout);
 
-        // Click listeners para cada opción del menú
-        cardCuentas.setOnClickListener(v -> showModuleToast(getString(R.string.menu_cuentas)));
+        // Click listener para el módulo Cuentas
+        cardCuentas.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, CuentasActivity.class);
+            startActivity(intent);
+        });
+
         cardTransacciones.setOnClickListener(v -> showModuleToast(getString(R.string.menu_transacciones)));
         cardContactos.setOnClickListener(v -> showModuleToast(getString(R.string.menu_contactos)));
         cardDeudas.setOnClickListener(v -> showModuleToast(getString(R.string.menu_deudas)));
 
-        // Abrir el Mapa de Sucursales (La Florida)
+        // Abrir el Mapa de Sucursales (Gran Santiago)
         cardMapas.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(intent);

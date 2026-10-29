@@ -40,4 +40,17 @@
     <string name="btn_my_location">Mi Ubicación</string>
     <string name="btn_back_to_menu">Volver al Menú</string>
     <string name="location_permission_required">Se requiere permiso de ubicación para geolocalizar en el mapa.</string>
+
+    <!-- Cuentas Module Strings -->
+    <string name="title_mis_cuentas">Mis Cuentas Financieras</string>
+    <string name="btn_nueva_cuenta">Nueva Cuenta</string>
+    <string name="title_crear_cuenta">Crear Nueva Cuenta</string>
+    <string name="hint_nombre_cuenta">Nombre de la Cuenta (Ej. Banco Estado)</string>
+    <string name="hint_tipo_cuenta">Tipo (Ej. Débito, Efectivo, Ahorro)</string>
+    <string name="hint_saldo_inicial">Saldo Inicial ($)</string>
+    <string name="empty_cuentas_msg">No hay cuentas registradas. Crea una presionando el botón "Nueva Cuenta".</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="cuenta_creada_exito">¡Cuenta creada con éxito!</string>
+    <string name="error_campos_incompletos">Por favor completa todos los campos requeridos.</string>
 </resources>

@@ -32,7 +32,12 @@
             android:name=".activities.HomeActivity"
             android:exported="false" />
 
-        <!-- Mapa de Sucursales (La Florida) -->
+        <!-- Módulo de Cuentas Financieras -->
+        <activity
+            android:name=".activities.CuentasActivity"
+            android:exported="false" />
+
+        <!-- Mapa de Sucursales (Gran Santiago) -->
         <activity
             android:name=".MainActivity"
             android:exported="false"
