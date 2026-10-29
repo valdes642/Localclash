@@ -53,4 +53,16 @@
     <string name="btn_cancelar">Cancelar</string>
     <string name="cuenta_creada_exito">¡Cuenta creada con éxito!</string>
     <string name="error_campos_incompletos">Por favor completa todos los campos requeridos.</string>
+
+    <!-- Transacciones Module Strings -->
+    <string name="title_historial_transacciones">Historial de Transacciones</string>
+    <string name="btn_simular_transaccion">Simular Transacción</string>
+    <string name="title_simular_transaccion">Simular Nueva Transacción</string>
+    <string name="label_seleccionar_cuenta">Selecciona la Cuenta:</string>
+    <string name="label_tipo_transaccion">Tipo de Movimiento:</string>
+    <string name="hint_descripcion_transaccion">Descripción (Ej. Almuerzo Lider, Carga Bip)</string>
+    <string name="hint_monto_transaccion">Monto ($)</string>
+    <string name="empty_transacciones_msg">No hay transacciones registradas. Simula una presionando el botón inferior.</string>
+    <string name="transaccion_exitosa">¡Transacción registrada exitosamente!</string>
+    <string name="error_sin_cuentas">Debes crear al menos una cuenta antes de registrar transacciones.</string>
 </resources>

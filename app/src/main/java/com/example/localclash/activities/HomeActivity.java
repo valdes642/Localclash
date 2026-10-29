@@ -44,7 +44,12 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        cardTransacciones.setOnClickListener(v -> showModuleToast(getString(R.string.menu_transacciones)));
+        // Click listener para el módulo Transacciones
+        cardTransacciones.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, TransaccionesActivity.class);
+            startActivity(intent);
+        });
+
         cardContactos.setOnClickListener(v -> showModuleToast(getString(R.string.menu_contactos)));
         cardDeudas.setOnClickListener(v -> showModuleToast(getString(R.string.menu_deudas)));
 

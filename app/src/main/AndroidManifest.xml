@@ -37,6 +37,11 @@
             android:name=".activities.CuentasActivity"
             android:exported="false" />
 
+        <!-- Módulo de Transacciones e Historial -->
+        <activity
+            android:name=".activities.TransaccionesActivity"
+            android:exported="false" />
+
         <!-- Mapa de Sucursales (Gran Santiago) -->
         <activity
             android:name=".MainActivity"

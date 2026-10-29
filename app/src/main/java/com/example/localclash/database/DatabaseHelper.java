@@ -18,7 +18,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "LocalCashDB.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; // Incrementado para reflejar datos iniciales de transacciones
 
     // Nombre de Tablas
     public static final String TABLE_CUENTAS = "Cuentas";
@@ -94,6 +94,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_CUENTAS + " (nombre, tipo, saldo) VALUES ('Efectivo', 'Efectivo', 50000.0)");
         db.execSQL("INSERT INTO " + TABLE_CUENTAS + " (nombre, tipo, saldo) VALUES ('Cuenta RUT', 'Débito', 120000.0)");
 
+        // Transacciones iniciales
+        db.execSQL("INSERT INTO " + TABLE_TRANSACCIONES + " (cuenta_id, tipo, monto, descripcion, fecha, latitud, longitud) VALUES (1, 'Ingreso', 50000.0, 'Carga inicial efectivo', '2026-03-20', -33.4489, -70.6693)");
+        db.execSQL("INSERT INTO " + TABLE_TRANSACCIONES + " (cuenta_id, tipo, monto, descripcion, fecha, latitud, longitud) VALUES (2, 'Egreso', 12500.0, 'Supermercado Lider La Florida', '2026-03-24', -33.5227, -70.5983)");
+
         // Contactos iniciales
         db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('Juan Pérez', '+56912345678', 'juan@gmail.com')");
         db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('María López', '+56987654321', 'maria@gmail.com')");
@@ -139,6 +143,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lista;
     }
 
+    public Cuenta getCuentaById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CUENTAS + " WHERE id = ?", new String[]{String.valueOf(id)});
+        Cuenta c = null;
+        if (cursor.moveToFirst()) {
+            c = new Cuenta(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("tipo")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"))
+            );
+        }
+        cursor.close();
+        return c;
+    }
+
+    public void actualizarSaldoCuenta(int cuentaId, double deltaSaldo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + TABLE_CUENTAS + " SET saldo = saldo + ? WHERE id = ?", new Object[]{deltaSaldo, cuentaId});
+    }
+
     // --- MÉTODOS CRUD TRANSACCIONES ---
 
     public long insertTransaccion(Transaccion t) {
@@ -151,7 +176,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("fecha", t.getFecha());
         values.put("latitud", t.getLatitud());
         values.put("longitud", t.getLongitud());
-        return db.insert(TABLE_TRANSACCIONES, null, values);
+        
+        long id = db.insert(TABLE_TRANSACCIONES, null, values);
+        if (id > 0) {
+            // Ajustar el saldo de la cuenta asociada
+            double delta = "Ingreso".equalsIgnoreCase(t.getTipo()) ? t.getMonto() : -t.getMonto();
+            actualizarSaldoCuenta(t.getCuentaId(), delta);
+        }
+        return id;
     }
 
     public List<Transaccion> getAllTransacciones() {
