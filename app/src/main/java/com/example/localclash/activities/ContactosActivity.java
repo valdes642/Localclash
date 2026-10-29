@@ -40,30 +40,27 @@ public class ContactosActivity extends AppCompatActivity implements ContactoAdap
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_contactos);
 
-        // Soporte EdgeToEdge para paddings de barras del sistema
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.contactos_root), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Inicializar Helper de Base de Datos
+
         dbHelper = new DatabaseHelper(this);
 
-        // Referencias de vista
+
         ImageButton btnBack = findViewById(R.id.btnBackFromContactos);
         rvContactos = findViewById(R.id.rvContactos);
         txtEmptyContactos = findViewById(R.id.txtEmptyContactos);
         ExtendedFloatingActionButton fabAgregar = findViewById(R.id.fabAgregarContacto);
 
-        // Configurar RecyclerView
-        rvContactos.setLayoutManager(new LinearLayoutManager(this));
 
-        // Eventos
+        rvContactos.setLayoutManager(new LinearLayoutManager(this));
         btnBack.setOnClickListener(v -> finish());
         fabAgregar.setOnClickListener(v -> showCrearContactoDialog());
 
-        // Cargar directorio de contactos desde SQLite
         loadContactosFromDatabase();
     }
 
@@ -116,7 +113,7 @@ public class ContactosActivity extends AppCompatActivity implements ContactoAdap
                 return;
             }
 
-            // Insertar Contacto en SQLite
+
             Contacto nuevoContacto = new Contacto(0, nombre, telefono, email);
             long res = dbHelper.insertContacto(nuevoContacto);
 

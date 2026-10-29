@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LocalClash">
 
-        <!-- Actividad de Login (Launcher) -->
+
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
@@ -27,32 +27,28 @@
             </intent-filter>
         </activity>
 
-        <!-- Pantalla de Inicio / Menú Principal -->
         <activity
             android:name=".activities.HomeActivity"
             android:exported="false" />
 
-        <!-- Módulo de Cuentas Financieras -->
+
         <activity
             android:name=".activities.CuentasActivity"
             android:exported="false" />
 
-        <!-- Módulo de Transacciones e Historial -->
+
         <activity
             android:name=".activities.TransaccionesActivity"
             android:exported="false" />
 
-        <!-- Módulo de Directorio de Contactos -->
         <activity
             android:name=".activities.ContactosActivity"
             android:exported="false" />
 
-        <!-- Módulo de Historial de Deudas -->
         <activity
             android:name=".activities.DeudasActivity"
             android:exported="false" />
 
-        <!-- Mapa de Sucursales (Gran Santiago) -->
         <activity
             android:name=".MainActivity"
             android:exported="false"

@@ -40,30 +40,30 @@ public class CuentasActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cuentas);
 
-        // Soporte EdgeToEdge para paddings de barras del sistema
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cuentas_root), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Inicializar helper de base de datos
+
         dbHelper = new DatabaseHelper(this);
 
-        // Referencias de vista
+
         ImageButton btnBack = findViewById(R.id.btnBackFromCuentas);
         rvCuentas = findViewById(R.id.rvCuentas);
         txtEmptyCuentas = findViewById(R.id.txtEmptyCuentas);
         ExtendedFloatingActionButton fabAgregar = findViewById(R.id.fabAgregarCuenta);
 
-        // Configurar RecyclerView
+
         rvCuentas.setLayoutManager(new LinearLayoutManager(this));
 
-        // Eventos de botones
+
         btnBack.setOnClickListener(v -> finish());
         fabAgregar.setOnClickListener(v -> showCrearCuentaDialog());
 
-        // Cargar cuentas desde la base de datos
+
         loadCuentasFromDatabase();
     }
 
@@ -100,7 +100,7 @@ public class CuentasActivity extends AppCompatActivity {
 
         dialog.show();
 
-        // Override del botón Guardar para validar antes de cerrar
+
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String nombre = etNombre.getText().toString().trim();
             String tipo = etTipo.getText().toString().trim();
@@ -127,7 +127,7 @@ public class CuentasActivity extends AppCompatActivity {
                 return;
             }
 
-            // Insertar en la Base de Datos SQLite
+
             Cuenta nuevaCuenta = new Cuenta(0, nombre, tipo, saldo);
             long res = dbHelper.insertCuenta(nuevaCuenta);
 

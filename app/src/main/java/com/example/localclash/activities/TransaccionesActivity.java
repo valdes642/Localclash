@@ -47,30 +47,30 @@ public class TransaccionesActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_transacciones);
 
-        // Soporte EdgeToEdge para paddings de barras del sistema
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.transacciones_root), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Inicializar Helper de Base de Datos
+
         dbHelper = new DatabaseHelper(this);
 
-        // Referencias de la vista
+
         ImageButton btnBack = findViewById(R.id.btnBackFromTransacciones);
         rvTransacciones = findViewById(R.id.rvTransacciones);
         txtEmptyTransacciones = findViewById(R.id.txtEmptyTransacciones);
         ExtendedFloatingActionButton fabSimular = findViewById(R.id.fabSimularTransaccion);
 
-        // Configurar RecyclerView
+
         rvTransacciones.setLayoutManager(new LinearLayoutManager(this));
 
-        // Eventos
+
         btnBack.setOnClickListener(v -> finish());
         fabSimular.setOnClickListener(v -> showSimularTransaccionDialog());
 
-        // Cargar historial de transacciones desde SQLite
+
         loadTransaccionesFromDatabase();
     }
 
@@ -107,7 +107,6 @@ public class TransaccionesActivity extends AppCompatActivity {
         EditText etDescripcion = dialogView.findViewById(R.id.etDescripcionTransaccion);
         EditText etMonto = dialogView.findViewById(R.id.etMontoTransaccion);
 
-        // Poblar Spinner de Cuentas
         List<String> nombresCuentas = new ArrayList<>();
         for (Cuenta c : cuentas) {
             nombresCuentas.add(c.getNombre() + " (Saldo: $" + (int) c.getSaldo() + ")");
@@ -115,7 +114,6 @@ public class TransaccionesActivity extends AppCompatActivity {
         ArrayAdapter<String> cuentaAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, nombresCuentas);
         spCuenta.setAdapter(cuentaAdapter);
 
-        // Poblar Spinner de Tipos de Transacción
         String[] tipos = new String[]{"Egreso", "Ingreso"};
         ArrayAdapter<String> tipoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, tipos);
         spTipo.setAdapter(tipoAdapter);
@@ -128,7 +126,6 @@ public class TransaccionesActivity extends AppCompatActivity {
 
         dialog.show();
 
-        // Override del botón positivo para validación
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String descripcion = etDescripcion.getText().toString().trim();
             String montoStr = etMonto.getText().toString().trim();
@@ -171,7 +168,6 @@ public class TransaccionesActivity extends AppCompatActivity {
                     lonSimulada
             );
 
-            // Guardar en la Base de Datos (e incrementar/decrementar saldo en SQLite)
             long res = dbHelper.insertTransaccion(nuevaTransaccion);
 
             if (res > 0) {

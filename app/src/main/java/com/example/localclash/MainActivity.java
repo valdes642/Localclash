@@ -44,19 +44,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
 
-    // Coordenadas del centro de Gran Santiago, Chile
+
     private static final double SANTIAGO_LAT = -33.4489;
     private static final double SANTIAGO_LON = -70.6693;
     private static final double DEFAULT_ZOOM = 11.5;
 
-    // URL de Estilo de MapLibre
+
     private static final String MAPLIBRE_STYLE_URL = "https://demotiles.maplibre.org/style.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inicializar MapLibre y Helper de Base de Datos
         MapLibre.getInstance(this);
         dbHelper = new DatabaseHelper(this);
 
@@ -76,10 +75,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        // Botón para regresar al menú principal
         btnBackToMenu.setOnClickListener(v -> finish());
 
-        // Botón flotante para activar la geolocalización GPS
         fabLocation.setOnClickListener(v -> centerOnUserLocation());
     }
 
@@ -88,17 +85,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.mapLibreMap = map;
 
         map.setStyle(MAPLIBRE_STYLE_URL, style -> {
-            // Posicionar la cámara inicialmente abarcando el Gran Santiago
+
             LatLng santiago = new LatLng(SANTIAGO_LAT, SANTIAGO_LON);
             map.setCameraPosition(new CameraPosition.Builder()
                     .target(santiago)
                     .zoom(DEFAULT_ZOOM)
                     .build());
 
-            // Cargar marcadores de Sucursales desde la Base de Datos SQLite
             loadBranchMarkersFromDatabase(map);
 
-            // Activar componente de localización del usuario
             enableLocationComponent(style);
         });
     }

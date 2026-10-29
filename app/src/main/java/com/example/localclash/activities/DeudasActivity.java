@@ -47,30 +47,30 @@ public class DeudasActivity extends AppCompatActivity implements DeudaAdapter.On
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_deudas);
 
-        // Soporte EdgeToEdge para paddings de barras del sistema
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.deudas_root), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Inicializar Helper de Base de Datos
+
         dbHelper = new DatabaseHelper(this);
 
-        // Referencias de la vista
+
         ImageButton btnBack = findViewById(R.id.btnBackFromDeudas);
         rvDeudas = findViewById(R.id.rvDeudas);
         txtEmptyDeudas = findViewById(R.id.txtEmptyDeudas);
         ExtendedFloatingActionButton fabAgregar = findViewById(R.id.fabAgregarDeuda);
 
-        // Configurar RecyclerView
+
         rvDeudas.setLayoutManager(new LinearLayoutManager(this));
 
-        // Eventos
+
         btnBack.setOnClickListener(v -> finish());
         fabAgregar.setOnClickListener(v -> showCrearDeudaDialog());
 
-        // Cargar historial de deudas desde SQLite
+
         loadDeudasFromDatabase();
     }
 
@@ -106,7 +106,7 @@ public class DeudasActivity extends AppCompatActivity implements DeudaAdapter.On
         EditText etDescripcion = dialogView.findViewById(R.id.etDescripcionDeuda);
         EditText etMonto = dialogView.findViewById(R.id.etMontoDeuda);
 
-        // Poblar Spinner de Contactos
+
         List<String> nombresContactos = new ArrayList<>();
         for (Contacto c : contactos) {
             nombresContactos.add(c.getNombre() + " (" + c.getTelefono() + ")");
@@ -122,7 +122,7 @@ public class DeudasActivity extends AppCompatActivity implements DeudaAdapter.On
 
         dialog.show();
 
-        // Override del botón positivo para validación
+
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String descripcion = etDescripcion.getText().toString().trim();
             String montoStr = etMonto.getText().toString().trim();
@@ -158,7 +158,7 @@ public class DeudasActivity extends AppCompatActivity implements DeudaAdapter.On
                     fechaActual
             );
 
-            // Guardar en la Base de Datos SQLite
+
             long res = dbHelper.insertDeuda(nuevaDeuda);
 
             if (res > 0) {

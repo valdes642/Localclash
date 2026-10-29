@@ -8,7 +8,7 @@
     android:background="?attr/colorSurface"
     tools:context=".activities.ContactosActivity">
 
-    <!-- Card de Encabezado Superior -->
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardHeaderContactos"
         android:layout_width="0dp"
@@ -52,7 +52,7 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Lista de Contactos -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvContactos"
         android:layout_width="0dp"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Mensaje cuando no hay contactos -->
+
     <TextView
         android:id="@+id/txtEmptyContactos"
         android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Botón Flotante Agregar Contacto -->
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabAgregarContacto"
         android:layout_width="wrap_content"

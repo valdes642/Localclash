@@ -33,14 +33,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Crear Tabla Cuentas
+
         db.execSQL("CREATE TABLE " + TABLE_CUENTAS + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT, " +
                 "tipo TEXT, " +
                 "saldo REAL)");
 
-        // Crear Tabla Transacciones
+
         db.execSQL("CREATE TABLE " + TABLE_TRANSACCIONES + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "cuenta_id INTEGER, " +
@@ -51,14 +51,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "latitud REAL, " +
                 "longitud REAL)");
 
-        // Crear Tabla Contactos
+
         db.execSQL("CREATE TABLE " + TABLE_CONTACTOS + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT, " +
                 "telefono TEXT, " +
                 "email TEXT)");
 
-        // Crear Tabla Deudas
+
         db.execSQL("CREATE TABLE " + TABLE_DEUDAS + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "contacto_id INTEGER, " +
@@ -67,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "estado TEXT, " +
                 "fecha TEXT)");
 
-        // Crear Tabla Sucursales
+
         db.execSQL("CREATE TABLE " + TABLE_SUCURSALES + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT, " +
@@ -75,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "latitud REAL, " +
                 "longitud REAL)");
 
-        // Cargar Datos Iniciales de Demostración
+
         seedInitialData(db);
     }
 
@@ -90,29 +90,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void seedInitialData(SQLiteDatabase db) {
-        // Cuentas iniciales
+
         db.execSQL("INSERT INTO " + TABLE_CUENTAS + " (nombre, tipo, saldo) VALUES ('Efectivo', 'Efectivo', 50000.0)");
         db.execSQL("INSERT INTO " + TABLE_CUENTAS + " (nombre, tipo, saldo) VALUES ('Cuenta RUT', 'Débito', 120000.0)");
 
-        // Transacciones iniciales
+
         db.execSQL("INSERT INTO " + TABLE_TRANSACCIONES + " (cuenta_id, tipo, monto, descripcion, fecha, latitud, longitud) VALUES (1, 'Ingreso', 50000.0, 'Carga inicial efectivo', '2026-03-20', -33.4489, -70.6693)");
         db.execSQL("INSERT INTO " + TABLE_TRANSACCIONES + " (cuenta_id, tipo, monto, descripcion, fecha, latitud, longitud) VALUES (2, 'Egreso', 12500.0, 'Supermercado Lider La Florida', '2026-03-24', -33.5227, -70.5983)");
 
-        // Contactos iniciales
+
         db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('Juan Pérez', '+56912345678', 'juan@gmail.com')");
         db.execSQL("INSERT INTO " + TABLE_CONTACTOS + " (nombre, telefono, email) VALUES ('María López', '+56987654321', 'maria@gmail.com')");
 
-        // Deudas iniciales
+
         db.execSQL("INSERT INTO " + TABLE_DEUDAS + " (contacto_id, monto, descripcion, estado, fecha) VALUES (1, 15000.0, 'Almuerzo compartido', 'Pendiente', '2026-03-25')");
         db.execSQL("INSERT INTO " + TABLE_DEUDAS + " (contacto_id, monto, descripcion, estado, fecha) VALUES (2, 8500.0, 'Uber de regreso', 'Pendiente', '2026-03-28')");
 
-        // Sucursales iniciales
+
         db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Santiago Centro', 'Av. Libertador Bernardo O''Higgins 1111', -33.4429, -70.6539)");
         db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal La Florida', 'Av. Vicuña Mackenna 7110', -33.5227, -70.5983)");
         db.execSQL("INSERT INTO " + TABLE_SUCURSALES + " (nombre, direccion, latitud, longitud) VALUES ('Sucursal Providencia', 'Av. Providencia 1950', -33.4255, -70.6148)");
     }
 
-    // --- MÉTODOS CRUD CUENTAS ---
+
 
     public long insertCuenta(Cuenta cuenta) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -164,7 +164,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE " + TABLE_CUENTAS + " SET saldo = saldo + ? WHERE id = ?", new Object[]{deltaSaldo, cuentaId});
     }
 
-    // --- MÉTODOS CRUD TRANSACCIONES ---
 
     public long insertTransaccion(Transaccion t) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -209,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lista;
     }
 
-    // --- MÉTODOS CRUD CONTACTOS ---
+
 
     public long insertContacto(Contacto c) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -245,7 +244,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_CONTACTOS, "id = ?", new String[]{String.valueOf(id)});
     }
 
-    // --- MÉTODOS CRUD DEUDAS ---
+
 
     public long insertDeuda(Deuda d) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -291,7 +290,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_DEUDAS, values, "id = ?", new String[]{String.valueOf(deudaId)});
     }
 
-    // --- MÉTODOS CRUD SUCURSALES ---
+
 
     public List<Sucursal> getAllSucursales() {
         List<Sucursal> lista = new ArrayList<>();

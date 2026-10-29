@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
 
-    // Credenciales de acceso requeridas
+
     private static final String TARGET_USERNAME = "victor";
     private static final String TARGET_PASSWORD = "060402";
 
@@ -42,30 +42,28 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        // Soporte EdgeToEdge para paddings de barras del sistema
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login_scroll_view), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Referencias a los componentes de la vista
+
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
         btnBiometricLogin = findViewById(R.id.btnBiometricLogin);
         txtStatus = findViewById(R.id.txtStatus);
 
-        // Configurar la autenticación por huella dactilar (Biometría)
         setupBiometricPrompt();
 
-        // Listener para inicio de sesión por Usuario y Clave
         btnLogin.setOnClickListener(v -> handleTraditionalLogin());
 
-        // Listener para inicio de sesión por Huella
+
         btnBiometricLogin.setOnClickListener(v -> triggerBiometricAuth());
 
-        // Verificar disponibilidad de hardware biométrico
+
         checkBiometricAvailability();
     }
 
@@ -107,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
             txtStatus.setText(R.string.status_default);
-            // Solicitar biometría automáticamente cuando la ventana tenga foco
+
             getWindow().getDecorView().post(this::triggerBiometricAuth);
         } else {
             btnBiometricLogin.setEnabled(false);
@@ -137,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Validación de credenciales para el usuario 'victor' y clave '060402'
+
         if (TARGET_USERNAME.equalsIgnoreCase(enteredUsername) && TARGET_PASSWORD.equals(enteredPassword)) {
             Toast.makeText(this, getString(R.string.welcome_message), Toast.LENGTH_SHORT).show();
             navigateToHome();

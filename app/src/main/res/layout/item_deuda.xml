@@ -68,7 +68,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Estado Badge (Pendiente / Pagado) -->
+
             <TextView
                 android:id="@+id/txtEstadoDeuda"
                 android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <!-- Botón de Cambiar Estado -->
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCambiarEstado"
                 style="@style/Widget.Material3.Button.OutlinedButton"

@@ -23,14 +23,14 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
-        // Soporte EdgeToEdge para paddings de barras del sistema
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home_scroll_view), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Referencias a las tarjetas de menú
+
         CardView cardCuentas = findViewById(R.id.cardCuentas);
         CardView cardTransacciones = findViewById(R.id.cardTransacciones);
         CardView cardContactos = findViewById(R.id.cardContactos);
@@ -38,37 +38,37 @@ public class HomeActivity extends AppCompatActivity {
         CardView cardMapas = findViewById(R.id.cardMapas);
         Button btnLogout = findViewById(R.id.btnLogout);
 
-        // Click listener para el módulo Cuentas
+
         cardCuentas.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, CuentasActivity.class);
             startActivity(intent);
         });
 
-        // Click listener para el módulo Transacciones
+
         cardTransacciones.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, TransaccionesActivity.class);
             startActivity(intent);
         });
 
-        // Click listener para el módulo Contactos
+
         cardContactos.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ContactosActivity.class);
             startActivity(intent);
         });
 
-        // Click listener para el módulo Deudas
+
         cardDeudas.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, DeudasActivity.class);
             startActivity(intent);
         });
 
-        // Abrir el Mapa de Sucursales (Gran Santiago)
+
         cardMapas.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(intent);
         });
 
-        // Cerrar sesión y volver al Login
+
         btnLogout.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);

@@ -14,7 +14,7 @@
         android:textColor="?attr/colorPrimary"
         android:layout_marginBottom="16dp" />
 
-    <!-- Selector de Contacto -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:layout_height="48dp"
         android:layout_marginBottom="12dp" />
 
-    <!-- Descripción del Gasto/Deuda -->
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Monto -->
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
