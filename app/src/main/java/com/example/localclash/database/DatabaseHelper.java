@@ -284,6 +284,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lista;
     }
 
+    public void updateEstadoDeuda(int deudaId, String nuevoEstado) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("estado", nuevoEstado);
+        db.update(TABLE_DEUDAS, values, "id = ?", new String[]{String.valueOf(deudaId)});
+    }
+
     // --- MÉTODOS CRUD SUCURSALES ---
 
     public List<Sucursal> getAllSucursales() {

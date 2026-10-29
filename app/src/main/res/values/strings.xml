@@ -79,4 +79,18 @@
     <string name="contacto_eliminado_exito">Contacto eliminado.</string>
     <string name="confirm_delete_contacto_title">Eliminar Contacto</string>
     <string name="confirm_delete_contacto_msg">¿Estás seguro de que deseas eliminar a %1$s de tus contactos?</string>
+
+    <!-- Deudas Module Strings -->
+    <string name="title_historial_deudas">Historial de Deudas</string>
+    <string name="btn_nueva_deuda">Registrar Deuda</string>
+    <string name="title_crear_deuda">Registrar Deuda / Gasto Compartido</string>
+    <string name="label_seleccionar_contacto">Contacto Involucrado:</string>
+    <string name="hint_descripcion_deuda">Descripción (Ej. Almuerzo compartido)</string>
+    <string name="hint_monto_deuda">Monto de la Deuda ($)</string>
+    <string name="empty_deudas_msg">No hay deudas en el historial. Registra una presionando "Registrar Deuda".</string>
+    <string name="btn_marcar_pagado">Marcar como Pagado</string>
+    <string name="btn_marcar_pendiente">Marcar Pendiente</string>
+    <string name="deuda_guardada_exito">¡Deuda registrada con éxito!</string>
+    <string name="deuda_estado_actualizado">Estado de la deuda actualizado.</string>
+    <string name="error_sin_contactos">Debes agregar al menos un contacto antes de registrar deudas.</string>
 </resources>

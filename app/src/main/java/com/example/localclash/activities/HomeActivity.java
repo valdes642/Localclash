@@ -56,7 +56,11 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        cardDeudas.setOnClickListener(v -> showModuleToast(getString(R.string.menu_deudas)));
+        // Click listener para el módulo Deudas
+        cardDeudas.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, DeudasActivity.class);
+            startActivity(intent);
+        });
 
         // Abrir el Mapa de Sucursales (Gran Santiago)
         cardMapas.setOnClickListener(v -> {

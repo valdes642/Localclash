@@ -47,6 +47,11 @@
             android:name=".activities.ContactosActivity"
             android:exported="false" />
 
+        <!-- Módulo de Historial de Deudas -->
+        <activity
+            android:name=".activities.DeudasActivity"
+            android:exported="false" />
+
         <!-- Mapa de Sucursales (Gran Santiago) -->
         <activity
             android:name=".MainActivity"
