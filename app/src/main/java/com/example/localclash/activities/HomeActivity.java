@@ -50,7 +50,12 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        cardContactos.setOnClickListener(v -> showModuleToast(getString(R.string.menu_contactos)));
+        // Click listener para el módulo Contactos
+        cardContactos.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, ContactosActivity.class);
+            startActivity(intent);
+        });
+
         cardDeudas.setOnClickListener(v -> showModuleToast(getString(R.string.menu_deudas)));
 
         // Abrir el Mapa de Sucursales (Gran Santiago)

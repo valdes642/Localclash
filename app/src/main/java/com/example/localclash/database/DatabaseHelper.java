@@ -18,7 +18,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "LocalCashDB.db";
-    private static final int DATABASE_VERSION = 2; // Incrementado para reflejar datos iniciales de transacciones
+    private static final int DATABASE_VERSION = 2;
 
     // Nombre de Tablas
     public static final String TABLE_CUENTAS = "Cuentas";
@@ -176,10 +176,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("fecha", t.getFecha());
         values.put("latitud", t.getLatitud());
         values.put("longitud", t.getLongitud());
-        
+
         long id = db.insert(TABLE_TRANSACCIONES, null, values);
         if (id > 0) {
-            // Ajustar el saldo de la cuenta asociada
             double delta = "Ingreso".equalsIgnoreCase(t.getTipo()) ? t.getMonto() : -t.getMonto();
             actualizarSaldoCuenta(t.getCuentaId(), delta);
         }
@@ -239,6 +238,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return lista;
+    }
+
+    public int deleteContacto(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_CONTACTOS, "id = ?", new String[]{String.valueOf(id)});
     }
 
     // --- MÉTODOS CRUD DEUDAS ---

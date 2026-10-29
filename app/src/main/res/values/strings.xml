@@ -65,4 +65,18 @@
     <string name="empty_transacciones_msg">No hay transacciones registradas. Simula una presionando el botón inferior.</string>
     <string name="transaccion_exitosa">¡Transacción registrada exitosamente!</string>
     <string name="error_sin_cuentas">Debes crear al menos una cuenta antes de registrar transacciones.</string>
+
+    <!-- Contactos Module Strings -->
+    <string name="title_directorio_contactos">Directorio de Contactos</string>
+    <string name="btn_nuevo_contacto">Nuevo Contacto</string>
+    <string name="title_crear_contacto">Agregar Nuevo Contacto</string>
+    <string name="hint_nombre_contacto">Nombre Completo (Ej. Carlos Silva)</string>
+    <string name="hint_telefono_contacto">Teléfono (Ej. +56912345678)</string>
+    <string name="hint_email_contacto">Correo Electrónico (Ej. carlos@email.com)</string>
+    <string name="empty_contactos_msg">No hay contactos guardados. Agrega uno presionando "Nuevo Contacto".</string>
+    <string name="btn_eliminar_contacto">Eliminar Contacto</string>
+    <string name="contacto_guardado_exito">¡Contacto guardado con éxito!</string>
+    <string name="contacto_eliminado_exito">Contacto eliminado.</string>
+    <string name="confirm_delete_contacto_title">Eliminar Contacto</string>
+    <string name="confirm_delete_contacto_msg">¿Estás seguro de que deseas eliminar a %1$s de tus contactos?</string>
 </resources>

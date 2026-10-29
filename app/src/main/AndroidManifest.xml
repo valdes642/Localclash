@@ -42,6 +42,11 @@
             android:name=".activities.TransaccionesActivity"
             android:exported="false" />
 
+        <!-- Módulo de Directorio de Contactos -->
+        <activity
+            android:name=".activities.ContactosActivity"
+            android:exported="false" />
+
         <!-- Mapa de Sucursales (Gran Santiago) -->
         <activity
             android:name=".MainActivity"
